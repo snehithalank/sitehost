@@ -1,0 +1,16 @@
+### Summary
+
+This pull request includes the solution to the SiteHost technical challenge.
+
+### Part One
+
+- Implemented a script in Python to call the provided API and retrieve the list of domains and DNS records for the client ID 100.
+
+### Part Two
+
+- Diagnosed the issue described by Alice in email.md.
+- Provided a detailed response in reply.md with steps to resolve the issue and included the retrieved code.
+
+Please review the changes and provide feedback.
+
+Thank you!
