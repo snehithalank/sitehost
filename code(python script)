@@ -1,0 +1,53 @@
+import requests
+
+# Constants
+API_KEY = 'h523hDtETbkJ3nSJL323hjYLXbCyDaRZ'
+BASE_URL = 'https://api.recruitment.shq.nz'
+CLIENT_ID = 100
+
+def get_domains(client_id):
+    url = f"{BASE_URL}/domains/{client_id}?api_key={API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        response.raise_for_status()
+
+def get_zone_records(zone_id):
+    url = f"{BASE_URL}/zones/{zone_id}?api_key={API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        response.raise_for_status()
+
+def main():
+    # Step 1: Get domains for the client
+    domains_data = get_domains(CLIENT_ID)
+    
+    if not domains_data:
+        print("No domains found for the client.")
+        return
+
+    # Step 2: Fetch and print DNS records for each domain
+    for domain in domains_data:
+        domain_name = domain.get('domain')
+        zones = domain.get('zones', [])
+        
+        print(f"Domain: {domain_name}")
+        for zone in zones:
+            zone_id = zone.get('id')
+            zone_name = zone.get('name')
+            print(f"  Zone: {zone_name} (ID: {zone_id})")
+
+            # Fetch DNS records for the zone
+            records = get_zone_records(zone_id)
+            for record in records:
+                record_type = record.get('type')
+                record_name = record.get('name')
+                record_content = record.get('content')
+                print(f"    Record: {record_name} {record_type} {record_content}")
+        print()  # Newline for better readability
+
+if name == "main":
+    main()
